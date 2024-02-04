@@ -36,7 +36,7 @@
 #ifndef __IMU_9DOF_ICM20600_H__
 #define __IMU_9DOF_ICM20600_H__
 
-#include "I2Cdev.h"
+#include "I2CUtils/i2c-register.hpp"
 
 /***************************************************************
     ICM20600 I2C Register
@@ -188,9 +188,11 @@ enum icm20600_power_type_t {
 };
 
 
-class ICM20600 {
+class ICM20600 : public I2CDevice {
   public:
     ICM20600(bool AD0 = true);
+
+    void begin() {}
 
     uint8_t getDeviceID();
     void initialize();
@@ -234,8 +236,6 @@ class ICM20600 {
     int16_t getTemperature(void);
 
   private:
-    uint8_t _addr;
-    uint8_t _buffer[16];
     uint16_t _acc_scale, _gyro_scale;
 
 };
